@@ -1,15 +1,18 @@
 package duc.taskmanager.fragment;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -23,11 +26,9 @@ import duc.taskmanager.adapter.TaskAdapter;
 import duc.taskmanager.database.Doing;
 import duc.taskmanager.activity.UpdateTaskActivity;
 import duc.taskmanager.database.Done;
-import duc.taskmanager.database.Todo;
 import duc.taskmanager.util.Constract;
-import duc.taskmanager.util.Updateable;
 
-public class DoingFragment extends Fragment  implements TaskAdapter.TaskAdapterListener, Updateable {
+public class DoingFragment extends Fragment implements TaskAdapter.TaskAdapterListener {
     private TaskAdapter adapter;
     private ArrayList<Doing> listDoing;
     private int positionEdit;
@@ -69,6 +70,7 @@ public class DoingFragment extends Fragment  implements TaskAdapter.TaskAdapterL
                     + " must implement OnHeadlineSelectedListener");
         }
     }
+
     @Override
     public void del(int position) {
         Doing.delete(Doing.class, listDoing.get(position).getId());
@@ -92,6 +94,9 @@ public class DoingFragment extends Fragment  implements TaskAdapter.TaskAdapterL
     public void status(int position) {
         Done done = new Done();
         done.setComper(listDoing.get(position).getComper()).setStart(listDoing.get(position).getStart()).setEnd(listDoing.get(position).getEnd()).save();
+        Intent intent = new Intent(DoneFragment.RADIO_DATASET_CHANGED);
+        getActivity().getApplicationContext().sendBroadcast(intent);
+        del(position);
     }
 
     public void reloadData() {
@@ -106,12 +111,26 @@ public class DoingFragment extends Fragment  implements TaskAdapter.TaskAdapterL
     public void onResume() {
         super.onResume();
         reloadData();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(RADIO_DATASET_CHANGED);
+        radio = new Radio();
+        getActivity().getApplicationContext().registerReceiver(radio, filter);
     }
-    public interface PushDataToActivity{
+
+    public interface PushDataToActivity {
         void push(int position, ArrayList<Doing> listDoing);
     }
-    @Override
-    public void updateable() {
-        reloadData();
+
+    public static final String RADIO_DATASET_CHANGED = "com.yourapp.app.RADIO_DATASET_CHANGED";
+
+    private Radio radio;
+
+    private class Radio extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(RADIO_DATASET_CHANGED)) {
+                reloadData();
+            }
+        }
     }
 }

@@ -5,24 +5,31 @@ import java.util.List;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-	List<Fragment> fragments;
+    List<Fragment> fragments;
 
-	public MyFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
-		super(fm);
-		this.fragments = fragments;
-	}
+    public MyFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+        super(fm);
+        this.fragments = fragments;
+    }
 
-	@Override
-	public Fragment getItem(int position) {
-		return this.fragments.get(position);
-	}
+    @Override
+    public Fragment getItem(int position) {
+        return this.fragments.get(position);
+    }
 
-	@Override
-	public int getCount() {
-		
-		return fragments.size();
-	}
+    @Override
+    public int getCount() {
+
+        return fragments.size();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
 }

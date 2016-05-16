@@ -20,13 +20,11 @@ import java.util.List;
 import duc.taskmanager.R;
 import duc.taskmanager.adapter.TaskAdapter;
 import duc.taskmanager.database.Doing;
-import duc.taskmanager.database.Done;
 import duc.taskmanager.database.Todo;
 import duc.taskmanager.activity.UpdateTaskActivity;
 import duc.taskmanager.util.Constract;
-import duc.taskmanager.util.Updateable;
 
-public class TodoFragment extends Fragment  implements TaskAdapter.TaskAdapterListener, Updateable {
+public class TodoFragment extends Fragment  implements TaskAdapter.TaskAdapterListener {
     private TaskAdapter adapter;
     private ArrayList<Todo> listTodo;
     private int positionEdit;
@@ -91,6 +89,9 @@ public class TodoFragment extends Fragment  implements TaskAdapter.TaskAdapterLi
     public void status(int position) {
         Doing doing = new Doing();
         doing.setComper(listTodo.get(position).getComper()).setStart(listTodo.get(position).getStart()).setEnd(listTodo.get(position).getEnd()).save();
+        Intent intent = new Intent(DoingFragment.RADIO_DATASET_CHANGED);
+        getActivity().getApplicationContext().sendBroadcast(intent);
+        del(position);
     }
 
     public void reloadData() {
@@ -104,11 +105,6 @@ public class TodoFragment extends Fragment  implements TaskAdapter.TaskAdapterLi
     @Override
     public void onResume() {
         super.onResume();
-        reloadData();
-    }
-
-    @Override
-    public void updateable() {
         reloadData();
     }
 

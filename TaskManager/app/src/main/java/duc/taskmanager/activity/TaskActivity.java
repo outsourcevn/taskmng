@@ -16,8 +16,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 
-import com.activeandroid.query.Select;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -31,7 +29,6 @@ import duc.taskmanager.util.Constract;
 import duc.taskmanager.fragment.DoingFragment;
 import duc.taskmanager.fragment.DoneFragment;
 import duc.taskmanager.fragment.TodoFragment;
-import duc.taskmanager.util.Updateable;
 
 public class TaskActivity extends AppCompatActivity implements TodoFragment.PushDataToActivity, DoingFragment.PushDataToActivity, DoneFragment.PushDataToActivity, TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener{
     private Button btnAddTask;
@@ -44,7 +41,6 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
     private float mPrevX;
     private float mPrevY;
     private boolean bl = false;
-    Updateable updateable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +147,6 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
             return v;
         }
     }
-
     private void initializeViewPager() {
         List<Fragment> fragments = new Vector<>();
         fragments.add(new TodoFragment());
@@ -178,11 +173,12 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
         }
         tabHost.setOnTabChangedListener(this);
         tabView = tabHost.getCurrentTabView();
-        tabView.setBackgroundColor(Color.RED);
+        tabView.setBackgroundResource(R.drawable.gray);
     }
 
     @Override
     public void onTabChanged(String tabId) {
+
         tabView.setBackgroundColor(Color.TRANSPARENT);
         tabView = tabHost.getCurrentTabView();
         int pos = this.tabHost.getCurrentTab();
@@ -191,7 +187,7 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
 
         int scrollPos = tabView.getLeft() - (hScrollView.getWidth() - tabView.getWidth()) / 2;
         hScrollView.smoothScrollTo(scrollPos, 0);
-        tabView.setBackgroundColor(Color.RED);
+        tabView.setBackgroundResource(R.drawable.gray);
     }
 
     @Override
@@ -199,9 +195,6 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
 
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {
-    }
-    public void addDownloadListener(Updateable capNhat) {
-        this.updateable = capNhat;
     }
     @Override
     public void onPageSelected(int position) {

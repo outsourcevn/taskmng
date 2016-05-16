@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -51,16 +52,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.RecyclerViewHo
     public void onBindViewHolder(RecyclerViewHolder viewHolder, int position) {
         if (taskType.equals(Constract.TODO)) {
             Todo todo = (Todo) list.get(position);
+            viewHolder.txtTask.setText("To Do");
             viewHolder.txtComPer.setText(todo.getComper());
             viewHolder.txtStart.setText(todo.getStart());
             viewHolder.txtEnd.setText(todo.getEnd());
         } else if (taskType.equals(Constract.DOING)) {
             Doing doing = (Doing) list.get(position);
+            viewHolder.txtTask.setText("Doing");
             viewHolder.txtComPer.setText(doing.getComper());
             viewHolder.txtStart.setText(doing.getStart());
             viewHolder.txtEnd.setText(doing.getEnd());
         } else {
             Done done = (Done) list.get(position);
+            viewHolder.txtTask.setText("Done");
             viewHolder.txtComPer.setText(done.getComper());
             viewHolder.txtStart.setText(done.getStart());
             viewHolder.txtEnd.setText(done.getEnd());
@@ -69,10 +73,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.RecyclerViewHo
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtComPer, txtStart, txtEnd;
+        public TextView txtTask, txtComPer, txtStart, txtEnd;
         public ImageView imvPriority;
         public Button btnMenu;
-        public SeekBar seekBarComPer, seekBarTimeLine;
+        public SeekBar seekBarComPer;
+        public ProgressBar progressBarTimeLine;
 
         // for show menu edit and delete
         private PopupMenu popupMenu;
@@ -80,6 +85,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.RecyclerViewHo
         public RecyclerViewHolder(View itemView) {
             super(itemView);
 
+            txtTask = (TextView) itemView.findViewById(R.id.txt_Task);
             txtComPer = (TextView) itemView.findViewById(R.id.txt_CompletePercent);
             txtStart = (TextView) itemView.findViewById(R.id.txt_Start);
             txtEnd = (TextView) itemView.findViewById(R.id.txt_End);
@@ -88,7 +94,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.RecyclerViewHo
             btnMenu = (Button) itemView.findViewById(R.id.btn_Menu);
 
             seekBarComPer = (SeekBar) itemView.findViewById(R.id.seekBar_CompletePercent);
-            seekBarTimeLine = (SeekBar) itemView.findViewById(R.id.seekBar_TimeLine);
+            seekBarComPer.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    txtComPer.setText(String.valueOf(progress)+ " %");
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
 
             btnMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,7 +155,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.RecyclerViewHo
     public interface TaskAdapterListener {
 
         void edit(int position);
+
         void status(int position);
+
         void del(int position);
     }
 
