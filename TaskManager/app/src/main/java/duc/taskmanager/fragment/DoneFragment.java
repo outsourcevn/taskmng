@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
+import com.activeandroid.query.Update;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +26,8 @@ import duc.taskmanager.adapter.TaskAdapter;
 import duc.taskmanager.database.Doing;
 import duc.taskmanager.database.Done;
 import duc.taskmanager.activity.UpdateTaskActivity;
-import duc.taskmanager.util.Constract;
+import duc.taskmanager.database.Todo;
+import duc.taskmanager.util.Constant;
 
 public class DoneFragment extends Fragment implements TaskAdapter.TaskAdapterListener {
     private TaskAdapter adapter;
@@ -49,7 +51,7 @@ public class DoneFragment extends Fragment implements TaskAdapter.TaskAdapterLis
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new TaskAdapter(getActivity(), listDone = new ArrayList<>(), Constract.DƠNE);
+        adapter = new TaskAdapter(getActivity(), listDone = new ArrayList<>(), Constant.DONE);
         adapter.setListener(this);
         recyclerView.setAdapter(adapter);
         // Inflate the layout for this fragment
@@ -78,28 +80,39 @@ public class DoneFragment extends Fragment implements TaskAdapter.TaskAdapterLis
     }
 
     @Override
+    public void save(int position, String data) {
+        new Update(Done.class).set("COMPER = " + data).where("ID = ?", listDone.get(position).getId()).execute();
+        reloadData();
+    }
+
+    @Override
     public void edit(int position) {
         positionEdit = position;
 
         Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
-        intent.putExtra(Constract.COMPLETEPERCENT, listDone.get(position).getComper());
-        intent.putExtra(Constract.START, listDone.get(position).getStart());
-        intent.putExtra(Constract.END, listDone.get(position).getEnd());
-        getActivity().startActivityForResult(intent, Constract.REQUEST_CODE_EDIT);
+        intent.putExtra(Constant.PRIORITY, listDone.get(position).getPriority());
+        intent.putExtra(Constant.START, listDone.get(position).getStart());
+        intent.putExtra(Constant.END, listDone.get(position).getEnd());
+        intent.putExtra(Constant.TOPIC, listDone.get(position).getTopic());
+        intent.putExtra(Constant.NAME, listDone.get(position).getName());
+        intent.putExtra(Constant.DETAIL, listDone.get(position).getDetail());
+        getActivity().startActivityForResult(intent, Constant.REQUEST_CODE_EDIT);
         pushDataToActivity.push(positionEdit, listDone);
     }
 
     @Override
     public void status(int position) {
         Doing doing = new Doing();
-        doing.setComper(listDone.get(position).getComper()).setStart(listDone.get(position).getStart()).setEnd(listDone.get(position).getEnd()).save();
-        Intent intent = new Intent(DoingFragment.RADIO_DATASET_CHANGED);
+        doing.setPriority(listDone.get(position).getPriority()).setComper(listDone.get(position).getComper()).setStart(listDone.get(position).getStart()).
+                setEnd(listDone.get(position).getEnd()).setTopic(listDone.get(position).getTopic()).setName(listDone.get(position).getName()).
+                setDetail(listDone.get(position).getDetail()).save();
+        Intent intent = new Intent(Constant.RADIO_DATASET_CHANGED);
         getActivity().getApplicationContext().sendBroadcast(intent);
         del(position);
     }
 
     public void reloadData() {
-        List<Done> ls = new Select().from(Done.class).orderBy("COMPER ASC").execute();
+        List<Done> ls = new Select().from(Done.class).orderBy("PRIORITY ASC").execute();
         listDone.clear();
         listDone.addAll(ls);
         Collections.reverse(listDone);
@@ -109,25 +122,23 @@ public class DoneFragment extends Fragment implements TaskAdapter.TaskAdapterLis
     @Override
     public void onResume() {
         super.onResume();
-        reloadData();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(RADIO_DATASET_CHANGED);
+        filter.addAction(Constant.RADIO_DATASET_CHANGED);
         radio = new Radio();
         getActivity().getApplicationContext().registerReceiver(radio, filter);
+        reloadData();
     }
 
     public interface PushDataToActivity {
         void push(int position, ArrayList<Done> listDone);
     }
 
-    public static final String RADIO_DATASET_CHANGED = "com.yourapp.app.RADIO_DATASET_CHANGED";
-
     private Radio radio;
 
     private class Radio extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(RADIO_DATASET_CHANGED)) {
+            if (intent.getAction().equals(Constant.RADIO_DATASET_CHANGED)) {
                 reloadData();
             }
         }

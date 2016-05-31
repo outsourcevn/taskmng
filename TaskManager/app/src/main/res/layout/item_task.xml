@@ -2,10 +2,10 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="1dp"
-    android:layout_marginLeft="1dp"
-    android:layout_marginRight="1dp"
-    android:background="@color/background_activity"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@color/white"
     android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
@@ -13,76 +13,68 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imv_Priority"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="4dp"
-                android:src="@drawable/priority" />
+                style="@style/item_task_imv"
+                android:layout_gravity="left"/>
 
             <LinearLayout
                 android:layout_width="250dp"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <TableRow
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:layout_weight="1">
 
                     <TextView
                         android:id="@+id/txt_Task"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:text="To do"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        style="@style/item_task_txt"/>
 
                     <SeekBar
                         android:id="@+id/seekBar_CompletePercent"
                         android:layout_width="170dp"
                         android:layout_height="20dp"
-                        android:maxHeight="20dp"
-                        android:progressDrawable="@drawable/theme_seekbar"
-                        android:thumb="@drawable/thumb_timeline" />
+                        android:layout_gravity="center"
+                        android:max="100"
+                        android:maxHeight="16dp"
+                        android:progressDrawable="@drawable/theme_seekbar_green"
+                        android:thumb="@mipmap/thumb_timeline" />
 
                     <TextView
                         android:id="@+id/txt_CompletePercent"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content" />
+                        style="@style/item_task_txt" />
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:layout_weight="1">
 
                     <TextView
                         android:id="@+id/txt_Start"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content" />
+                        style="@style/item_task_txt" />
 
                     <ProgressBar
+                        android:id="@+id/progressBar_TimeLine"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="140dp"
                         android:layout_height="16dp"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:progress="20"
-                        android:progressDrawable="@drawable/theme_progress" />
+                        android:max="100"
+                        android:progressDrawable="@drawable/theme_progress_timeline" />
 
                     <TextView
                         android:id="@+id/txt_End"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content" />
+                        style="@style/item_task_txt" />
 
                 </TableRow>
 
@@ -90,40 +82,63 @@
 
             <Button
                 android:id="@+id/btn_Menu"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:background="@drawable/btn_menu" />
+                style="@style/item_task_imv"
+                android:background="@mipmap/btn_menu"
+                android:layout_gravity="right"/>
 
-        </LinearLayout>
-        <TableRow
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_height="wrap_content">
+
             <ImageView
-                android:id="@+id/imv_TaskType"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="4dp"
-                android:src="@drawable/worker" />
+                android:id="@+id/imv_TaskTopic"
+                style="@style/item_task_imv"
+                android:layout_gravity="left"/>
 
             <TextView
                 android:id="@+id/txt_TaskName"
                 android:layout_width="250dp"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="TASK MANAGER /nTASK MANAGER"
-                android:gravity="center_vertical"/>
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/btn_Expand"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:background="@drawable/expand" />
-        </TableRow>
+                style="@style/item_task_imv"
+                android:background="@mipmap/btn_expand_close"
+                android:layout_gravity="right"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_Expand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/txt_TaskTopic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txt_TaskDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!--<ListView-->
+            <!--android:id="@+id/list_detail"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        </LinearLayout>
 
     </LinearLayout>
 

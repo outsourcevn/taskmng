@@ -4,22 +4,22 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-import duc.taskmanager.util.Constract;
+import duc.taskmanager.util.Constant;
 
 /**
  * Created by Duc on 5/12/2016.
  * Note: when update database must update AA_DB_VERSION
  */
-    @Table(name = "tbTodo")
+            @Table(name = "tbTodo")
 public class Todo extends Model {
-    public static final String PRIORITY = Constract.PRIORITY;
-    public static final String COMPER = Constract.COMPLETEPERCENT;
-    public static final String START = Constract.START;
-    public static final String END = Constract.END;
-    public static final String TYPE = Constract.TYPE;
-    public static final String NAME = Constract.NAME;
-    public static final String DETAIL = Constract.DETAIL;
-    public static final String MEDIA = Constract.MEDIA;
+    public static final String PRIORITY = Constant.PRIORITY;
+    public static final String COMPER = Constant.COMPLETEPERCENT;
+    public static final String START = Constant.START;
+    public static final String END = Constant.END;
+    public static final String TOPIC = Constant.TOPIC;
+    public static final String NAME = Constant.NAME;
+    public static final String DETAIL = Constant.DETAIL;
+    public static final String MEDIA = Constant.MEDIA;
 
     @Column(name = PRIORITY)
     private String priority;
@@ -33,8 +33,8 @@ public class Todo extends Model {
     @Column(name = END)
     private String end;
 
-    @Column(name = TYPE)
-    private String type;
+    @Column(name = TOPIC)
+    private String topic;
 
     @Column(name = NAME)
     private String name;
@@ -81,39 +81,39 @@ public class Todo extends Model {
         return this;
     }
 
-    public String getType() {
-        return priority;
+    public String getTopic() {
+        return topic;
     }
 
-    public Todo setType(String priority) {
-        this.priority = priority;
+    public Todo setTopic(String topic) {
+        this.topic = topic;
         return this;
     }
 
     public String getName() {
-        return priority;
+        return name;
     }
 
-    public Todo setName(String priority) {
-        this.priority = priority;
+    public Todo setName(String name) {
+        this.name = name;
         return this;
     }
 
     public String getDetail() {
-        return priority;
+        return detail;
     }
 
-    public Todo setDetail(String priority) {
-        this.priority = priority;
+    public Todo setDetail(String detail) {
+        this.detail = detail;
         return this;
     }
 
     public String getMedia() {
-        return priority;
+        return media;
     }
 
-    public Todo setMedia(String priority) {
-        this.priority = priority;
+    public Todo setMedia(String media) {
+        this.media = media;
         return this;
     }
 }

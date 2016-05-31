@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
+import com.activeandroid.query.Update;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,9 +23,9 @@ import duc.taskmanager.adapter.TaskAdapter;
 import duc.taskmanager.database.Doing;
 import duc.taskmanager.database.Todo;
 import duc.taskmanager.activity.UpdateTaskActivity;
-import duc.taskmanager.util.Constract;
+import duc.taskmanager.util.Constant;
 
-public class TodoFragment extends Fragment  implements TaskAdapter.TaskAdapterListener {
+public class TodoFragment extends Fragment implements TaskAdapter.TaskAdapterListener {
     private TaskAdapter adapter;
     private ArrayList<Todo> listTodo;
     private int positionEdit;
@@ -46,7 +47,7 @@ public class TodoFragment extends Fragment  implements TaskAdapter.TaskAdapterLi
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new TaskAdapter(getActivity(), listTodo = new ArrayList<>(), Constract.TODO);
+        adapter = new TaskAdapter(getActivity(), listTodo = new ArrayList<>(), Constant.TODO);
         adapter.setListener(this);
         recyclerView.setAdapter(adapter);
         // Inflate the layout for this fragment
@@ -66,6 +67,7 @@ public class TodoFragment extends Fragment  implements TaskAdapter.TaskAdapterLi
                     + " must implement OnHeadlineSelectedListener");
         }
     }
+
     @Override
     public void del(int position) {
         Todo.delete(Todo.class, listTodo.get(position).getId());
@@ -74,28 +76,40 @@ public class TodoFragment extends Fragment  implements TaskAdapter.TaskAdapterLi
     }
 
     @Override
+    public void save(int position, String data) {
+        new Update(Todo.class).set("COMPER = " + data).where("ID = ?", listTodo.get(position).getId()).execute();
+        reloadData();
+    }
+
+    @Override
     public void edit(int position) {
         positionEdit = position;
 
         Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
-        intent.putExtra(Constract.COMPLETEPERCENT, listTodo.get(position).getComper());
-        intent.putExtra(Constract.START, listTodo.get(position).getStart());
-        intent.putExtra(Constract.END, listTodo.get(position).getEnd());
-        getActivity().startActivityForResult(intent, Constract.REQUEST_CODE_EDIT);
+        intent.putExtra(Constant.PRIORITY, listTodo.get(position).getPriority());
+        intent.putExtra(Constant.START, listTodo.get(position).getStart());
+        intent.putExtra(Constant.END, listTodo.get(position).getEnd());
+        intent.putExtra(Constant.TOPIC, listTodo.get(position).getTopic());
+        intent.putExtra(Constant.NAME, listTodo.get(position).getName());
+        intent.putExtra(Constant.DETAIL, listTodo.get(position).getDetail());
+        getActivity().startActivityForResult(intent, Constant.REQUEST_CODE_EDIT);
         pushDataToActivity.push(positionEdit, listTodo);
     }
 
     @Override
     public void status(int position) {
         Doing doing = new Doing();
-        doing.setComper(listTodo.get(position).getComper()).setStart(listTodo.get(position).getStart()).setEnd(listTodo.get(position).getEnd()).save();
-        Intent intent = new Intent(DoingFragment.RADIO_DATASET_CHANGED);
+
+        doing.setPriority(listTodo.get(position).getPriority()).setComper(listTodo.get(position).getComper()).setStart(listTodo.get(position).getStart()).
+                setEnd(listTodo.get(position).getEnd()).setTopic(listTodo.get(position).getTopic()).setName(listTodo.get(position).getName()).
+                setDetail(listTodo.get(position).getDetail()).save();
+        Intent intent = new Intent(Constant.RADIO_DATASET_CHANGED);
         getActivity().getApplicationContext().sendBroadcast(intent);
         del(position);
     }
 
     public void reloadData() {
-        List<Todo> ls = new Select().from(Todo.class).orderBy("COMPER ASC").execute();
+        List<Todo> ls = new Select().from(Todo.class).orderBy("PRIORITY ASC").execute();
         listTodo.clear();
         listTodo.addAll(ls);
         Collections.reverse(listTodo);
@@ -108,7 +122,7 @@ public class TodoFragment extends Fragment  implements TaskAdapter.TaskAdapterLi
         reloadData();
     }
 
-    public interface PushDataToActivity{
+    public interface PushDataToActivity {
         void push(int position, ArrayList<Todo> listTodo);
     }
 }

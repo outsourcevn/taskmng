@@ -4,7 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-import duc.taskmanager.util.Constract;
+import duc.taskmanager.util.Constant;
 
 /**
  * Created by Duc on 5/12/2016.
@@ -12,14 +12,14 @@ import duc.taskmanager.util.Constract;
  */
 @Table(name = "tbDone")
 public class Done extends Model {
-    public static final String PRIORITY = Constract.PRIORITY;
-    public static final String COMPER = Constract.COMPLETEPERCENT;
-    public static final String START = Constract.START;
-    public static final String END = Constract.END;
-    public static final String TYPE = Constract.TYPE;
-    public static final String NAME = Constract.NAME;
-    public static final String DETAIL = Constract.DETAIL;
-    public static final String MEDIA = Constract.MEDIA;
+    public static final String PRIORITY = Constant.PRIORITY;
+    public static final String COMPER = Constant.COMPLETEPERCENT;
+    public static final String START = Constant.START;
+    public static final String END = Constant.END;
+    public static final String TOPIC = Constant.TOPIC;
+    public static final String NAME = Constant.NAME;
+    public static final String DETAIL = Constant.DETAIL;
+    public static final String MEDIA = Constant.MEDIA;
 
     @Column(name = PRIORITY)
     private String priority;
@@ -33,8 +33,8 @@ public class Done extends Model {
     @Column(name = END)
     private String end;
 
-    @Column(name = TYPE)
-    private String type;
+    @Column(name = TOPIC)
+    private String topic;
 
     @Column(name = NAME)
     private String name;
@@ -81,39 +81,39 @@ public class Done extends Model {
         return this;
     }
 
-    public String getType() {
-        return priority;
+    public String getTopic() {
+        return topic;
     }
 
-    public Done setType(String priority) {
-        this.priority = priority;
+    public Done setTopic(String topic) {
+        this.topic = topic;
         return this;
     }
 
     public String getName() {
-        return priority;
+        return name;
     }
 
-    public Done setName(String priority) {
-        this.priority = priority;
+    public Done setName(String name) {
+        this.name = name;
         return this;
     }
 
     public String getDetail() {
-        return priority;
+        return detail;
     }
 
-    public Done setDetail(String priority) {
-        this.priority = priority;
+    public Done setDetail(String detail) {
+        this.detail = detail;
         return this;
     }
 
     public String getMedia() {
-        return priority;
+        return media;
     }
 
-    public Done setMedia(String priority) {
-        this.priority = priority;
+    public Done setMedia(String media) {
+        this.media = media;
         return this;
     }
 }

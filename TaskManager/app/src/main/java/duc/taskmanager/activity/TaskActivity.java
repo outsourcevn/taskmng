@@ -1,46 +1,44 @@
 package duc.taskmanager.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
-import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
+
+import com.activeandroid.query.Select;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
+import duc.taskmanager.notification.NotificationReceiver;
 import duc.taskmanager.R;
 import duc.taskmanager.adapter.MyFragmentPagerAdapter;
 import duc.taskmanager.database.Doing;
 import duc.taskmanager.database.Done;
 import duc.taskmanager.database.Todo;
-import duc.taskmanager.util.Constract;
+import duc.taskmanager.util.Constant;
 import duc.taskmanager.fragment.DoingFragment;
 import duc.taskmanager.fragment.DoneFragment;
 import duc.taskmanager.fragment.TodoFragment;
+import duc.taskmanager.util.Utility;
 
-public class TaskActivity extends AppCompatActivity implements TodoFragment.PushDataToActivity, DoingFragment.PushDataToActivity, DoneFragment.PushDataToActivity, TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener{
-    private Button btnAddTask;
+public class TaskActivity extends BaseActivity implements TodoFragment.PushDataToActivity, DoingFragment.PushDataToActivity, DoneFragment.PushDataToActivity, TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
     private int position;
     private ArrayList list;
     private View tabView;
     private TabHost tabHost;
     private ViewPager viewPager;
     private MyFragmentPagerAdapter myViewPagerAdapter;
-    private float mPrevX;
-    private float mPrevY;
-    private boolean bl = false;
+    private Button btnTabTodo, btnTabDoing, btnTabDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,46 +48,13 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
         this.initializeTabHost(savedInstanceState);
         // init ViewPager
         this.initializeViewPager();
-
         btnAddTask = (Button) findViewById(R.id.btn_AddTask);
+        txtSlogan = (TextView) findViewById(R.id.txt_slogan);
         btnAddTask.bringToFront();
-        btnAddTask.setOnTouchListener(onTouchListener);
-        btnAddTask.setOnClickListener(onClickListener);
-    }
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            startActivityForResult(new Intent(TaskActivity.this, UpdateTaskActivity.class), Constract.REQUEST_CODE_ADD);
-        }
-    };
 
-    View.OnTouchListener onTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            float currX, currY;
-            int action = event.getAction();
-            switch (action) {
-                case MotionEvent.ACTION_DOWN: {
-                    mPrevX = event.getX();
-                    mPrevY = event.getY();
-                    bl = false;
-                    break;
-                }
-                case MotionEvent.ACTION_MOVE: {
-                    currX = event.getRawX();
-                    currY = event.getRawY();
-                    ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(btnAddTask.getLayoutParams());
-                    marginParams.setMargins((int) (currX - mPrevX), (int) (currY - mPrevY), 0, 0);
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(marginParams);
-                    btnAddTask.setLayoutParams(layoutParams);
-                    bl = true;
-                    Log.e("ACTION_MOVE", Boolean.toString(bl));
-                    break;
-                }
-            }
-            return bl;
+        btnAddTask.setOnTouchListener(onTouchListener);
+        txtSlogan.setOnClickListener(onClickListener);
         }
-    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -97,29 +62,40 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
         Todo todo = new Todo();
         Doing doing = new Doing();
         Done done = new Done();
-        switch (Constract.positionTask) {
+        String comper = "0";
+        switch (Constant.positionTask) {
             case 0:
-                if (resultCode == Constract.RESULT_CODE) {
-                    if (requestCode == Constract.REQUEST_CODE_EDIT) {
+                if (resultCode == Constant.RESULT_CODE) {
+                    if (requestCode == Constant.REQUEST_CODE_EDIT) {
                         todo = (Todo) list.get(position);
+                        comper = todo.getComper();
                     }
-                    todo.setComper(data.getStringExtra(Constract.COMPLETEPERCENT)).setStart(data.getStringExtra(Constract.START)).setEnd(data.getStringExtra(Constract.END)).save();
+
+                    todo.setPriority(data.getStringExtra(Constant.PRIORITY)).setComper(comper).
+                            setStart(data.getStringExtra(Constant.START)).setEnd(data.getStringExtra(Constant.END)).setTopic(data.getStringExtra(Constant.TOPIC)).
+                            setName(data.getStringExtra(Constant.NAME)).setDetail(data.getStringExtra(Constant.DETAIL)).save();
                 }
                 break;
             case 1:
-                if (resultCode == Constract.RESULT_CODE) {
-                    if (requestCode == Constract.REQUEST_CODE_EDIT) {
+                if (resultCode == Constant.RESULT_CODE) {
+                    if (requestCode == Constant.REQUEST_CODE_EDIT) {
                         doing = (Doing) list.get(position);
+                        comper = doing.getComper();
                     }
-                    doing.setComper(data.getStringExtra(Constract.COMPLETEPERCENT)).setStart(data.getStringExtra(Constract.START)).setEnd(data.getStringExtra(Constract.END)).save();
+                    doing.setPriority(data.getStringExtra(Constant.PRIORITY)).setComper(comper).
+                            setStart(data.getStringExtra(Constant.START)).setEnd(data.getStringExtra(Constant.END)).setTopic(data.getStringExtra(Constant.TOPIC)).
+                            setName(data.getStringExtra(Constant.NAME)).setDetail(data.getStringExtra(Constant.DETAIL)).save();
                 }
                 break;
             case 2:
-                if (resultCode == Constract.RESULT_CODE) {
-                    if (requestCode == Constract.REQUEST_CODE_EDIT) {
+                if (resultCode == Constant.RESULT_CODE) {
+                    if (requestCode == Constant.REQUEST_CODE_EDIT) {
                         done = (Done) list.get(position);
+                        comper = done.getComper();
                     }
-                    done.setComper(data.getStringExtra(Constract.COMPLETEPERCENT)).setStart(data.getStringExtra(Constract.START)).setEnd(data.getStringExtra(Constract.END)).save();
+                    done.setPriority(data.getStringExtra(Constant.PRIORITY)).setComper(comper).
+                            setStart(data.getStringExtra(Constant.START)).setEnd(data.getStringExtra(Constant.END)).setTopic(data.getStringExtra(Constant.TOPIC)).
+                            setName(data.getStringExtra(Constant.NAME)).setDetail(data.getStringExtra(Constant.DETAIL)).save();
                 }
                 break;
         }
@@ -147,6 +123,7 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
             return v;
         }
     }
+
     private void initializeViewPager() {
         List<Fragment> fragments = new Vector<>();
         fragments.add(new TodoFragment());
@@ -157,7 +134,6 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
         this.viewPager = (ViewPager) super.findViewById(R.id.viewPager);
         this.viewPager.setAdapter(this.myViewPagerAdapter);
         this.viewPager.setOnPageChangeListener(this);
-//        onRestart();
     }
 
     private void initializeTabHost(Bundle args) {
@@ -172,33 +148,123 @@ public class TaskActivity extends AppCompatActivity implements TodoFragment.Push
             tabHost.addTab(tabSpec);
         }
         tabHost.setOnTabChangedListener(this);
-        tabView = tabHost.getCurrentTabView();
-        tabView.setBackgroundResource(R.drawable.gray);
+        btnTabTodo = (Button) findViewById(R.id.btn_tab_Todo);
+        btnTabDoing = (Button) findViewById(R.id.btn_tab_Doing);
+        btnTabDone = (Button) findViewById(R.id.btn_tab_Done);
+        btnTabTodo.setBackgroundResource(R.mipmap.tab_backgound_press);
     }
 
     @Override
     public void onTabChanged(String tabId) {
 
-        tabView.setBackgroundColor(Color.TRANSPARENT);
-        tabView = tabHost.getCurrentTabView();
-        int pos = this.tabHost.getCurrentTab();
-        this.viewPager.setCurrentItem(pos);
-        HorizontalScrollView hScrollView = (HorizontalScrollView) findViewById(R.id.hScrollView);
 
-        int scrollPos = tabView.getLeft() - (hScrollView.getWidth() - tabView.getWidth()) / 2;
-        hScrollView.smoothScrollTo(scrollPos, 0);
-        tabView.setBackgroundResource(R.drawable.gray);
+        final int pos = this.tabHost.getCurrentTab();
+        this.viewPager.setCurrentItem(pos);
+//        tabView = tabHost.getCurrentTabView();
+//        HorizontalScrollView hScrollView = (HorizontalScrollView) findViewById(R.id.hScrollView);
+//        int scrollPos = tabView.getLeft() - (hScrollView.getWidth() - tabView.getWidth()) / 2;
+//        hScrollView.smoothScrollTo(scrollPos, 0);
+        if (pos == 0) {
+            btnTabTodo.setBackgroundResource(R.mipmap.tab_backgound_press);
+            btnTabDoing.setBackgroundResource(R.mipmap.tab_backgound);
+            btnTabDone.setBackgroundResource(R.mipmap.tab_backgound);
+        } else if (pos == 1) {
+            btnTabTodo.setBackgroundResource(R.mipmap.tab_backgound);
+            btnTabDoing.setBackgroundResource(R.mipmap.tab_backgound_press);
+            btnTabDone.setBackgroundResource(R.mipmap.tab_backgound);
+        } else {
+            btnTabTodo.setBackgroundResource(R.mipmap.tab_backgound);
+            btnTabDoing.setBackgroundResource(R.mipmap.tab_backgound);
+            btnTabDone.setBackgroundResource(R.mipmap.tab_backgound_press);
+        }
+
+        btnTabTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pos != 0) {
+                    viewPager.setCurrentItem(0);
+                }
+            }
+        });
+        btnTabDoing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pos != 1) {
+                    viewPager.setCurrentItem(1);
+                }
+            }
+        });
+        btnTabDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pos != 2) {
+                    viewPager.setCurrentItem(2);
+                }
+            }
+        });
     }
 
     @Override
-    public void onPageScrollStateChanged(int arg0) {    }
+    public void onPageScrollStateChanged(int arg0) {
+    }
 
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {
     }
+
     @Override
     public void onPageSelected(int position) {
         this.tabHost.setCurrentTab(position);
-        Constract.positionTask = position;
+        Constant.positionTask = position;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent myIntent = new Intent(TaskActivity.this, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(TaskActivity.this, 0, myIntent, 0);
+        Calendar calendar = Calendar.getInstance();
+
+        int day, month, year;
+        String[] currentDate = Utility.getCurrentDate().split("/");
+        day = Integer.parseInt(currentDate[0]);
+        month = Integer.parseInt(currentDate[1]);
+        year = Integer.parseInt(currentDate[2]);
+
+        List<Todo> lsTodo = new Select().from(Todo.class).execute();
+
+        for (int i = 0; i < lsTodo.size(); i++) {
+            int dayStart, monthStart, yearStart;
+            String[] timeStart = lsTodo.get(i).getStart().split("/");
+            dayStart = Integer.parseInt(timeStart[0]);
+            monthStart = Integer.parseInt(timeStart[1]);
+            yearStart = Integer.parseInt(timeStart[2]);
+            if (year <= yearStart && month <= monthStart && day < dayStart) {
+                calendar.set(Calendar.DAY_OF_MONTH, dayStart);
+                calendar.set(Calendar.HOUR_OF_DAY, 7);
+//                calendar.set(Calendar.MINUTE, 52);
+//                calendar.set(Calendar.SECOND, 40);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
+        }
+
+        List<Doing> lsDoing = new Select().from(Doing.class).execute();
+
+        for (int i = 0; i < lsDoing.size(); i++) {
+            int dayEnd, monthEnd, yearEnd;
+            String[] timeEnd = lsDoing.get(i).getEnd().split("/");
+            dayEnd = Integer.parseInt(timeEnd[0]);
+            monthEnd = Integer.parseInt(timeEnd[1]);
+            yearEnd = Integer.parseInt(timeEnd[2]);
+
+            if (year <= yearEnd && month <= monthEnd && day < dayEnd) {
+                calendar.set(Calendar.DAY_OF_MONTH, dayEnd);
+                calendar.set(Calendar.HOUR_OF_DAY, 7);
+//        calendar.set(Calendar.MINUTE, 52);
+//        calendar.set(Calendar.SECOND, 40);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
+        }
     }
 }

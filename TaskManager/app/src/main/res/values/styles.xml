@@ -30,4 +30,49 @@
         <item name="android:maxHeight">20dip</item>
     </style>
 
+    <!--      item_task    -->
+    <style name="item_task_imv">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="item_task_txt">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <!--      update_task    -->
+    <style name="update_task_txt">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="update_task_btn">
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <!--      task_activity    -->
+    <style name="header_task_framelayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="header_task_button">
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@mipmap/tab_backgound</item>
+    </style>
 </resources>
