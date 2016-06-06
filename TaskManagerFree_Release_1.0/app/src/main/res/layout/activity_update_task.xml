@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+    tools:context="duc.workmanager.activity.UpdateTaskActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/update_task_txt"
+            android:text="@string/layout_update_task_txt_priority" />
+
+        <Button
+            android:id="@+id/btn_Priority"
+            style="@style/update_task_btn_left"
+            android:text="@string/high" />
+
+        <TextView
+            style="@style/update_task_txt"
+            android:layout_marginLeft="20dp"
+            android:text="@string/layout_update_task_txt_topic" />
+
+        <Button
+            android:id="@+id/btn_Topic"
+            style="@style/update_task_btn_right"
+            android:text="@string/layout_update_task_btn_topic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/update_task_txt"
+            android:text="@string/layout_update_task_txt_start_time" />
+
+        <Button
+            android:id="@+id/btn_Start_Time"
+            style="@style/update_task_btn_left" />
+
+        <TextView
+            style="@style/update_task_txt"
+            android:layout_marginLeft="20dp"
+            android:text="@string/layout_update_task_txt_start_date" />
+
+        <Button
+            android:id="@+id/btn_Start_Date"
+            style="@style/update_task_btn_right"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/update_task_txt"
+            android:text="@string/layout_update_task_txt_end_time" />
+
+        <Button
+            android:id="@+id/btn_End_Time"
+            style="@style/update_task_btn_left" />
+
+        <TextView
+            style="@style/update_task_txt"
+            android:layout_marginLeft="20dp"
+            android:text="@string/layout_update_task_txt_end_date" />
+
+        <Button
+            android:id="@+id/btn_End_Date"
+            style="@style/update_task_btn_right"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edt_Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="@string/layout_update_task_txt_name"
+                android:inputType="textCapSentences|textAutoCorrect"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <EditText
+            android:id="@+id/edt_Detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="@string/layout_update_task_txt_detail"
+            android:inputType="textMultiLine"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/ok" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/cancel" />
+
+    </LinearLayout>
+</LinearLayout>

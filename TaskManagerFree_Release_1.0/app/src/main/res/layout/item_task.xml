@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@color/white"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imv_Priority"
+                style="@style/item_task_imv"
+                android:layout_gravity="left"/>
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txt_Task"
+                        style="@style/item_task_txt"
+                        android:textColor="@color/green"/>
+
+                    <SeekBar
+                        android:id="@+id/seekBar_CompletePercent"
+                        android:layout_width="170dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:max="100"
+                        android:maxHeight="16dp"
+                        android:progressDrawable="@drawable/theme_seekbar_green"
+                        android:thumb="@mipmap/thumb_timeline" />
+
+                    <TextView
+                        android:id="@+id/txt_CompletePercent"
+                        style="@style/item_task_txt"
+                        android:textColor="@color/colorPrimaryDark"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txt_Start"
+                        style="@style/item_task_txt"
+                        android:textColor="@color/colorPrimaryDark"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_TimeLine"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="140dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:max="100"
+                        android:progressDrawable="@drawable/theme_progress_timeline" />
+
+                    <TextView
+                        android:id="@+id/txt_End"
+                        style="@style/item_task_txt"
+                        android:textColor="@color/colorPrimaryDark"/>
+
+                </TableRow>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_Menu"
+                style="@style/item_task_imv"
+                android:background="@mipmap/btn_menu"
+                android:layout_gravity="right"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imv_TaskTopic"
+                style="@style/item_task_imv"
+                android:layout_gravity="left"/>
+
+            <TextView
+                android:id="@+id/txt_TaskName"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/damson"/>
+
+            <Button
+                android:id="@+id/btn_Expand"
+                style="@style/item_task_imv"
+                android:background="@mipmap/btn_expand_close"
+                android:layout_gravity="right"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_Expand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/txt_TaskTopic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <TextView
+                android:id="@+id/txt_TaskDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <!--<ListView-->
+            <!--android:id="@+id/list_detail"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

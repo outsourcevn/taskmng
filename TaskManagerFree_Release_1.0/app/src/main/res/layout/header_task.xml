@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".activity.TaskActivity"
+    tools:showIn="@layout/activity_task">
+
+    <TextView
+        android:id="@+id/txt_slogan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAlignment="center"
+        android:textStyle="italic|bold"
+        android:layout_margin="5dp"/>
+
+    <Button
+        android:id="@+id/btn_AddTask"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:background="@mipmap/btn_add" />
+
+    <TabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/txt_slogan">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--<HorizontalScrollView-->
+            <!--android:id="@+id/hScrollView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fillViewport="true"-->
+            <!--android:scrollbars="none">-->
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"></TabWidget>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    style="@style/header_task_framelayout">
+
+                    <Button
+                        android:id="@+id/btn_tab_Todo"
+                        style="@style/header_task_button"
+                        android:text="@string/title_activity_todo"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    style="@style/header_task_framelayout">
+
+                    <Button
+                        android:id="@+id/btn_tab_Doing"
+                        style="@style/header_task_button"
+                        android:text="@string/title_activity_doing"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    style="@style/header_task_framelayout">
+
+                    <Button
+                        android:id="@+id/btn_tab_Done"
+                        style="@style/header_task_button"
+                        android:text="@string/title_activity_done"/>
+                </FrameLayout>
+            </LinearLayout>
+
+            <!--</HorizontalScrollView>-->
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+</RelativeLayout>

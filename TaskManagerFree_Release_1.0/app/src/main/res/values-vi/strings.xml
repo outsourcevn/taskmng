@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quản lý công việc</string>
+
+    <string name="com_per">Phần trăm hoàn thành</string>
+    <string name="start_date">Ngày bắt đầu</string>
+    <string name="end_date">Ngày kết thúc</string>
+    <string name="ok">Đồng ý</string>
+    <string name="cancel">Bỏ qua</string>
+    <string name="update">Cập nhật</string>
+    <string name="yes">Có</string>
+    <string name="no">Không</string>
+
+    <!-- UpdateTaskActivity Toast -->
+    <string name="delete_success">Xóa hoặc chuyển thành công</string>
+    <string name="delete_fail">Xóa bị lỗi</string>
+    <string name="save_success">Lưu thành công</string>
+    <string name="save_fail">Lưu bị lỗi</string>
+    <string name="update_success">Cập nhật thành công</string>
+    <string name="update_fail">Cập nhật lỗi</string>
+
+    <string name="please_enter_name">Xin hãy nhập vào tên công việc</string>
+    <string name="please_enter_start_date">Xin hãy nhập vào ngày bắt đầu</string>
+    <string name="please_enter_end_date">Xin hãy nhập vào ngày kết thúc</string>
+    <string name="input_end_date_bigger_start_date">Ngày kết thúc phải nhỏ hơn ngày bắt đầu</string>
+    <string name="title_activity_todo">Cần làm</string>
+    <string name="title_activity_doing">Đang làm</string>
+    <string name="title_activity_done">Hoàn thành</string>
+    <string name="title_activity_update_task">UpdateTask</string>
+
+    <!-- UpdateTaskActivity layout -->
+    <string name="layout_update_task_txt_priority">Ưu tiên:</string>
+    <string name="layout_update_task_txt_topic">Chủ đề:</string>
+    <string name="layout_update_task_txt_start_time">Bắt đầu:</string>
+    <string name="layout_update_task_txt_start_date">Ngày:</string>
+    <string name="layout_update_task_txt_end_time">Kết thúc:</string>
+    <string name="layout_update_task_txt_end_date">Ngày:</string>
+    <string name="layout_update_task_txt_name">Tên công việc</string>
+    <string name="layout_update_task_txt_detail">Chi tiết</string>
+    <string name="layout_update_task_btn_topic">Chưa có</string>
+
+    <string name="dialog_tittle_priority">Mức độ ưu tiên</string>
+    <string name="dialog_tittle_Topic">Chủ đề</string>
+
+
+    <!-- TaskAdapterPopup -->
+    <string name="edit">Chỉnh sửa</string>
+    <string name="status_todo">Chuyển sang Đang làm</string>
+    <string name="status_doing">Chuyển sang Hoàn thành</string>
+    <string name="status_done">Chuyển sang Đang làm</string>
+    <string name="switch_task">Bạn có muốn chuyển công việc này?</string>
+    <string name="delete_task">Bạn có muốn xóa công việc này?</string>
+    <string name="delete">Xóa</string>
+    <string name="notice_switch_doing">Công việc này đã bắt đầu. Nếu bạn không muốn tiếp tục hiện thông báo này. Bạn phải sửa lại thời gian bắt đầu hoặc chuyển sang Đang làm</string>
+    <string name="notice_switch_done">Công việc này đã hoàn thành hoặc hêt hạn. Nếu bạn không muốn tiếp tục hiện thông báo này, bạn phải sửa lại hoặc chuyển sang Hoàn thành</string>
+
+    <!-- Notification -->
+    <string name="notification_switch_doing">Công việc này đã bắt đầu</string>
+    <string name="notification_switch_done">Công việc này đã hoàn thành</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_task">TaskActivity</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+    <!-- Priority -->
+    <string name="highest">Cao nhất</string>
+    <string name="high">Cao</string>
+    <string name="medium">Trung bình</string>
+    <string name="low">Thấp</string>
+
+    <!-- Topic -->
+    <string name="assign">Giao việc</string>
+    <string name="head_work">Công việc văn phòng</string>
+    <string name="labour_work">Công việc hoạt động</string>
+    <string name="study">Học bài</string>
+    <string name="computer">Máy tính</string>
+    <string name="book">Đọc sách</string>
+    <string name="cooperation">Xã giao</string>
+    <string name="game">Trò chơi</string>
+    <string name="shoping">Mua sắm</string>
+    <string name="junket">Ăn uống</string>
+    <string name="sport">Thể thao</string>
+    <string name="other">Công việc khác</string>
+
+    <!-- Base Activity -->
+    <string name="dialog_tittle_slogan">Your slogan</string>
+</resources>

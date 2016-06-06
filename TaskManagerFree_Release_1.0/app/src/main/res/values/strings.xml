@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Work Manager</string>
+
+    <string name="com_per">Complete Percent</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- UpdateTaskActivity Toast -->
+    <string name="delete_success">Delete or Switch success</string>
+    <string name="delete_fail">Delete fail</string>
+    <string name="save_success">Save success</string>
+    <string name="save_fail">Save fail</string>
+    <string name="update_success">Update success</string>
+    <string name="update_fail">Update fail</string>
+
+    <string name="please_enter_name">Please enter name of work</string>
+    <string name="please_enter_start_date">Please enter Start date</string>
+    <string name="please_enter_end_date">Please enter End date</string>
+    <string name="input_end_date_bigger_start_date">End date must be more bigger than Start date</string>
+    <string name="title_activity_todo">Todo</string>
+    <string name="title_activity_doing">Doing</string>
+    <string name="title_activity_done">Done</string>
+    <string name="title_activity_update_task">UpdateTask</string>
+
+    <!-- UpdateTaskActivity layout -->
+    <string name="layout_update_task_txt_priority">Priority:</string>
+    <string name="layout_update_task_txt_topic">Topic:</string>
+    <string name="layout_update_task_txt_start_time">Start Time:</string>
+    <string name="layout_update_task_txt_start_date">Start Date:</string>
+    <string name="layout_update_task_txt_end_time">End Time:</string>
+    <string name="layout_update_task_txt_end_date">End Date:</string>
+    <string name="layout_update_task_txt_name">Task Name</string>
+    <string name="layout_update_task_txt_detail">Detail</string>
+    <string name="layout_update_task_btn_topic">Nothing</string>
+
+    <string name="dialog_tittle_priority">Priority</string>
+    <string name="dialog_tittle_Topic">Topic</string>
+
+
+    <!-- TaskAdapterPopup -->
+    <string name="edit">Edit</string>
+    <string name="status_todo">Switch to Doing</string>
+    <string name="status_doing">Switch to Done</string>
+    <string name="status_done">Switch to Doing</string>
+    <string name="switch_task">Are you switch this task?</string>
+    <string name="delete_task">Are you sure delete this task?</string>
+    <string name="delete">Delete</string>
+    <string name="notice_switch_doing">This task has been started. If you dont want show this notice, you must edit start time of this task or switch to DOING</string>
+    <string name="notice_switch_done">This task has been completed or expired. If you dont want show this notice, you must edit this task or switch to DONE</string>
+
+    <!-- Notification -->
+    <string name="notification_switch_doing">This task has been started.</string>
+    <string name="notification_switch_done">This task has been finish.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_task">TaskActivity</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+    <!-- Priority -->
+    <string name="highest">Highest</string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+
+    <!-- Topic -->
+    <string name="assign">Assign Manager</string>
+    <string name="head_work">Head Work</string>
+    <string name="labour_work">Labour Work</string>
+    <string name="study">Study</string>
+    <string name="computer">Computer</string>
+    <string name="book">Book</string>
+    <string name="cooperation">Cooperation</string>
+    <string name="game">Game</string>
+    <string name="shoping">Shoping</string>
+    <string name="junket">Junket</string>
+    <string name="sport">Sport</string>
+    <string name="other">Other</string>
+
+    <!-- Base Activity -->
+    <string name="dialog_tittle_slogan">Your slogan</string>
+</resources>

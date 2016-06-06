@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="duc.workmanager">
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <application
+        android:name="com.activeandroid.app.Application"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon_workmanager"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="task.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value=" duc.workmanager.database.Todo, duc.workmanager.database.Doing,duc.workmanager.database.Done" />
+
+        <activity
+            android:name="duc.workmanager.activity.BaseActivity"
+            android:label="@string/title_activity_base"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="duc.workmanager.activity.UpdateTaskActivity"
+            android:label="@string/title_activity_update_task"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="duc.workmanager.activity.TaskActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name="duc.workmanager.notification.NotificationService"
+            android:enabled="true" />
+        <receiver android:name="duc.workmanager.notification.NotificationReceiver" />
+    </application>
+
+</manifest>
